@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoomController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -11,10 +12,13 @@ Route::get('/', function () {
 
 // admin
 
-Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(function () {
 
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
+
+    // Route Ruangan
+    Route::get('rooms', [RoomController::class, 'index'])->name('room.index');
 
 });
 
