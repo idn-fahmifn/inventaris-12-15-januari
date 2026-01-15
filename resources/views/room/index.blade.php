@@ -4,10 +4,15 @@
             <h2 class="font-bold text-2xl text-slate-800 dark:text-slate-200 leading-tight">
                 {{ __('Rooms') }}
             </h2>
-            <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-room')"
-                class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-200 dark:shadow-none transition-all duration-300 transform hover:scale-105">
-                + Add New
-            </button>
+
+            @if (Auth::user()->is_admin)
+                <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-room')"
+                    class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-200 dark:shadow-none transition-all duration-300 transform hover:scale-105">
+                    + Add New
+                </button>
+            @endif
+
+            
         </div>
     </x-slot>
 
@@ -32,7 +37,7 @@
                         </thead>
                         <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
 
-                            @switch(Auth::user->is_admin)
+                            @switch(Auth::user()->is_admin)
                                 @case(true)
                                     @forelse ($rooms as $room)
                                         <tr class="group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
