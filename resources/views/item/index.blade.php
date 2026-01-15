@@ -120,17 +120,43 @@
                     </div>
                 </div>
 
-                <div>
-                    <x-input-label for="room" value="Room" class="dark:text-slate-400" />
-                    <select id="room" name="user_id" required
-                        class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">
-                        <option value="">Choose Room</option>
-                        @foreach ($rooms as $item)
-                            <option value="{{ $item->id }}">{{ $item->room_name }}</option>
-                        @endforeach
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <x-input-label for="room" value="Room" class="dark:text-slate-400" />
+                        <select id="room" name="user_id" required
+                            class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">
+                            <option value="">Choose Room</option>
+                            @foreach ($rooms as $item)
+                                <option value="{{ $item->id }}">{{ $item->room_name }}</option>
+                            @endforeach
 
-                    </select>
-                    <x-input-error :messages="$errors->get('room_id')" class="mt-2" />
+                        </select>
+                        <x-input-error :messages="$errors->get('room_id')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="status" value="Status Condition" class="dark:text-slate-400" />
+                        <select id="status" name="status" required
+                            class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">
+                            <option value="good">Good</option>
+                            <option value="broke">Broke</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                        <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                    </div>
+                </div>
+
+                <div>
+                    <x-input-label for="code" value="Date Purchase" class="dark:text-slate-400" />
+                    <x-text-input id="code" name="date_purchase" type="date" required :value="old('date')"
+                        class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl" />
+                    <x-input-error :messages="$errors->get('date_purchase')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="code" value="Image Item" class="dark:text-slate-400" />
+                    <x-text-input id="code" name="image" type="file" required :value="old('image')"
+                        class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl p-8" />
+                    <x-input-error :messages="$errors->get('image')" class="mt-2" />
 
                 </div>
 
