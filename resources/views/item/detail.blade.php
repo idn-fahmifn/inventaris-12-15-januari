@@ -5,7 +5,7 @@
                 {{ __('Detail Item') }}
             </h2>
 
-            <form action="{{ route('item.destroy', $room->slug) }}" method="post">
+            <form action="{{ route('item.destroy', $data->slug) }}" method="post">
                 @csrf
                 @method('delete')
                 <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-room')"
@@ -25,39 +25,49 @@
     <div class="py-12 bg-[#F8FAFC] dark:bg-slate-950 min-h-screen transition-colors duration-500">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
+
+
             <div
                 class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden my-2 p-6">
-                <div class="my-2">
-                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Item Name</p>
-                    <span class=" text-slate-400 dark:text-slate-500">{{ $data->item_name }}</span>
-                </div>
-                <div class="my-2">
-                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Item Code</p>
-                    <span class=" text-slate-400 dark:text-slate-500">{{ $data->item_code }}</span>
-                </div>
-                <div class="my-2">
-                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Status</p>
-                    <span
-                        class="inline-flex items-center text-[10px] font-black uppercase tracking-widest {{ $data->status === 'good' ? 'text-emerald-500' : ($data->status === 'maintenance' ? 'text-amber-500' : 'text-rose-500') }}">
-                        <span
-                            class="w-2 h-2 rounded-full mr-2 animate-pulse {{ $data->status === 'good' ? 'bg-emerald-500' : ($data->status === 'maintenance' ? 'bg-amber-500' : 'bg-rose-500') }}"></span>
-                        {{ $data->status }}
-                    </span>
-                </div>
-                <div class="my-2">
-                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Date Purchase</p>
-                    <span class=" text-slate-400 dark:text-slate-500">{{ $data->date_purchase }}</span>
-                </div>
-                <div class="my-2">
-                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Room</p>
-                    <span class=" text-slate-400 dark:text-slate-500">{{ $data->room->room_name }}</span>
-                </div>
-                <div class="my-2">
-                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Description</p>
-                    <span class=" text-slate-400 dark:text-slate-500">{{ $data->desc }}</span>
-                </div>
-                <div class="my-2">
-                    <img src="{{ asset('storage/images/items/'.$data->image) }}" width="100" class="img-fluid" alt="Image Item">
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="">
+                        <div class="my-2">
+                            <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Item Name</p>
+                            <span class=" text-slate-400 dark:text-slate-500">{{ $data->item_name }}</span>
+                        </div>
+                        <div class="my-2">
+                            <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Item Code</p>
+                            <span class=" text-slate-400 dark:text-slate-500">{{ $data->item_code }}</span>
+                        </div>
+                        <div class="my-2">
+                            <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Status</p>
+                            <span
+                                class="inline-flex items-center text-[10px] font-black uppercase tracking-widest {{ $data->status === 'good' ? 'text-emerald-500' : ($data->status === 'maintenance' ? 'text-amber-500' : 'text-rose-500') }}">
+                                <span
+                                    class="w-2 h-2 rounded-full mr-2 animate-pulse {{ $data->status === 'good' ? 'bg-emerald-500' : ($data->status === 'maintenance' ? 'bg-amber-500' : 'bg-rose-500') }}"></span>
+                                {{ $data->status }}
+                            </span>
+                        </div>
+                        <div class="my-2">
+                            <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Date Purchase</p>
+                            <span class=" text-slate-400 dark:text-slate-500">{{ $data->date_purchase }}</span>
+                        </div>
+                        <div class="my-2">
+                            <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Room</p>
+                            <span class=" text-slate-400 dark:text-slate-500">{{ $data->room->room_name }}</span>
+                        </div>
+                        <div class="my-2">
+                            <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Description</p>
+                            <span class=" text-slate-400 dark:text-slate-500">{{ $data->desc }}</span>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="my-2">
+                            <img src="{{ asset('storage/images/items/' . $data->image) }}"
+                                class="img-fluid max-w-full" alt="Image Item">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -68,9 +78,9 @@
             <div class="flex items-center justify-between mb-8">
                 <div>
                     <h2 class="text-xl font-black text-slate-800 dark:text-white">
-                        Edit room
+                        Edit Item
                     </h2>
-                    <p class="text-sm text-slate-400 dark:text-slate-500 mt-1">Edit {{ $room->room_name }} </p>
+                    <p class="text-sm text-slate-400 dark:text-slate-500 mt-1">Edit {{ $data->item_name }} </p>
                 </div>
                 <div class="p-3 rounded-2xl bg-blue-50 dark:bg-blue-900/30 text-blue-500">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -80,48 +90,76 @@
                 </div>
             </div>
 
-            <form method="post" action="{{ route('room.update', $room->slug) }}" class="space-y-6">
+            <form method="post" action="{{ route('item.update', $data->slug) }}" class="space-y-6">
                 @csrf
                 @method('put')
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <x-input-label for="name" value="Room Name" class="dark:text-slate-400" />
-                        <x-text-input id="name" name="room_name" type="text" required
-                            value="{{ $room->room_name }}"
-                            class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl"
-                            placeholder="ex: Server Room" />
-                        <x-input-error :messages="$errors->get('room_name')" class="mt-2" />
+                        <x-input-label for="name" value="Item Name" class="dark:text-slate-400" />
+                        <x-text-input id="name" name="item_name" type="text" required :value="old('item_name')"
+                            class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl" />
+                        <x-input-error :messages="$errors->get('item_name')" class="mt-2" />
+
                     </div>
 
                     <div>
-                        <x-input-label for="code" value="Room Code" class="dark:text-slate-400" />
-                        <x-text-input id="code" name="room_code" type="text" required
-                            value="{{ $room->room_code }}"
-                            class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl"
-                            placeholder="SRV-001" />
-                        <x-input-error :messages="$errors->get('room_code')" class="mt-2" />
+                        <x-input-label for="code" value="Item Code" class="dark:text-slate-400" />
+                        <x-text-input id="code" name="item_code" type="text" required :value="old('item_code')"
+                            class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl" />
+                        <x-input-error :messages="$errors->get('item_code')" class="mt-2" />
 
                     </div>
                 </div>
 
-                <div>
-                    <x-input-label for="category" value="PIC Room" class="dark:text-slate-400" />
-                    <select id="category" name="user_id" required
-                        class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">
-                        <option value="{{ $room->user_id }}">{{ $room->user->name }}</option>
-                        @foreach ($pic as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                        @endforeach
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <x-input-label for="room" value="Room" class="dark:text-slate-400" />
+                        <select id="room" name="room_id" required
+                            class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">
+                            <option value="">Choose Room</option>
+                            @foreach ($rooms as $item)
+                                <option value="{{ $item->id }}">{{ $item->room_name }}</option>
+                            @endforeach
 
-                    </select>
-                    <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
+                        </select>
+                        <x-input-error :messages="$errors->get('room_id')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="status" value="Status Condition" class="dark:text-slate-400" />
+                        <select id="status" name="status" required
+                            class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">
+                            <option value="good">Good</option>
+                            <option value="broke">Broke</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                        <x-input-error :messages="$errors->get('status')" class="mt-2" />
+                    </div>
+                </div>
+
+                <div>
+                    <x-input-label for="code" value="Date Purchase" class="dark:text-slate-400" />
+                    <x-text-input id="code" name="date_purchase" type="date" required :value="old('date')"
+                        class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl" />
+                    <x-input-error :messages="$errors->get('date_purchase')" class="mt-2" />
+                </div>
+
+                <div>
+                    <x-input-label for="code" value="Image Item" class="dark:text-slate-400" />
+                    <x-text-input id="code" name="image" type="file" required :value="old('image')"
+                        class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl p-8" />
+                    <x-input-error :messages="$errors->get('image')" class="mt-2" />
+
                 </div>
 
                 <div>
                     <x-input-label for="category" value="Description" class="dark:text-slate-400" required />
                     <textarea name="desc" id="desc"
-                        class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">{{ $room->desc }}</textarea>
+                        class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm"></textarea>
+                    <x-input-error :messages="$errors->get('desc')" class="mt-2" />
+
                 </div>
+
 
                 <div class="mt-8 flex justify-end gap-3">
                     <button type="button" x-on:click="$dispatch('close')"

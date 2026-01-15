@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Room;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ItemController extends Controller
@@ -60,7 +61,7 @@ class ItemController extends Controller
         return redirect()->route('item.index')->with('success', 'Item Created');
     }
 
-    public function detail($param)
+    public function show($param)
     {
         $data = Item::where('slug', $param)->firstOrFail();
         $rooms = Room::all();
