@@ -29,6 +29,21 @@
                 {{ $r }}
             @endforeach
 
+            <div class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden my-2 p-6">
+                <div class="my-2">
+                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Room Name</p>
+                    <span class=" text-slate-400 dark:text-slate-500">{{ $room->room_name }}</span>
+                </div>
+                <div class="my-2">
+                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Room Code</p>
+                    <span class=" text-slate-400 dark:text-slate-500">{{ $room->room_code }}</span>
+                </div>
+                <div class="my-2">
+                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Description</p>
+                    <span class=" text-slate-400 dark:text-slate-500">{{ $room->desc }}</span>
+                </div>
+            </div>
+
             <div
                 class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
                 <div class="overflow-x-auto">
