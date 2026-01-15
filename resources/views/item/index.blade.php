@@ -40,8 +40,11 @@
                                             {{ $item->item_code }}</div>
                                     </td>
                                     <td class="px-8 py-6">
-                                        <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
-                                            status
+                                        <span
+                                            class="inline-flex items-center text-[10px] font-black uppercase tracking-widest {{ $room->status === 'Tersedia' ? 'text-emerald-500' : ($room->status === 'Terbatas' ? 'text-amber-500' : 'text-rose-500') }}">
+                                            <span
+                                                class="w-2 h-2 rounded-full mr-2 animate-pulse {{ $item->status === 'good' ? 'bg-emerald-500' : ($item->status === 'maintenance' ? 'bg-amber-500' : 'bg-rose-500') }}"></span>
+                                            {{ $room->status }}
                                         </span>
                                     </td>
 
@@ -100,7 +103,7 @@
                 </div>
             </div>
 
-            <form method="post" action="{{ route('item.store') }}" class="space-y-6">
+            <form method="post" action="{{ route('item.store') }}" class="space-y-6" enctype="multipart/form-data">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
@@ -123,7 +126,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <x-input-label for="room" value="Room" class="dark:text-slate-400" />
-                        <select id="room" name="user_id" required
+                        <select id="room" name="room_id" required
                             class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">
                             <option value="">Choose Room</option>
                             @foreach ($rooms as $item)

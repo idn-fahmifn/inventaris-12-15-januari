@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Room;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ItemController extends Controller
 {
@@ -22,17 +24,22 @@ class ItemController extends Controller
     {
         $request->validate([
             'item_name' => ['required', 'string', 'min:3', 'max:20'],
-            'category_id' => ['required', 'integer'],
-            'stok' => ['required', 'integer', 'min:0', 'max:1000'],
+            'item_code' => ['required', 'string', 'min:3', 'max:10'],
+            'room_id' => ['required', 'integer'],
+            'status' => ['required', 'in:good,maintenance,broke'],
+            'date_purchase' => ['required', 'date'],
             'image' => ['required', 'file', 'max:10240', 'mimes:png,jpg,jpeg,svg,webp'],
             'desc' => ['required'],
+
         ]);
 
         $simpan = [
             'item_name' => $request->input('item_name'),
+            'item_code' => $request->input('item_code'),
             'desc' => $request->input('desc'),
-            'category_id' => $request->input('category_id'),
-            'stok' => $request->input('stok'),
+            'room_id' => $request->input('room_id'),
+            'status' => $request->input('status'),
+            'date_purchase' => $request->input('date_purchase'),
             'slug' => Str::slug($request->input('item_name')) . random_int(0, 1000000),
         ];
 
@@ -49,8 +56,6 @@ class ItemController extends Controller
             $gambar->storeAs($path, $nama);
 
         }
-
-
         Item::create($simpan); //menambahkan data ke database
         return redirect()->route('item.index')->with('success', 'Item Created');
     }
