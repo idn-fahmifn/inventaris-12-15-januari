@@ -2,11 +2,11 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-bold text-2xl text-slate-800 dark:text-slate-200 leading-tight">
-                {{ __('Detail Room') }}
+                {{ __('Detail Item') }}
             </h2>
 
-            <form action="{{ route('room.destroy', $room->slug) }}" method="post">
-                @csrf 
+            <form action="{{ route('item.destroy', $room->slug) }}" method="post">
+                @csrf
                 @method('delete')
                 <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-room')"
                     class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-200 dark:shadow-none transition-all duration-300 transform hover:scale-105">
@@ -25,84 +25,39 @@
     <div class="py-12 bg-[#F8FAFC] dark:bg-slate-950 min-h-screen transition-colors duration-500">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            @foreach ($errors->all() as $r)
-                {{ $r }}
-            @endforeach
-
-            <div class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden my-2 p-6">
+            <div
+                class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden my-2 p-6">
                 <div class="my-2">
-                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Room Name</p>
-                    <span class=" text-slate-400 dark:text-slate-500">{{ $room->room_name }}</span>
+                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Item Name</p>
+                    <span class=" text-slate-400 dark:text-slate-500">{{ $data->item_name }}</span>
                 </div>
                 <div class="my-2">
-                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Room Code</p>
-                    <span class=" text-slate-400 dark:text-slate-500">{{ $room->room_code }}</span>
+                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Item Code</p>
+                    <span class=" text-slate-400 dark:text-slate-500">{{ $data->item_code }}</span>
+                </div>
+                <div class="my-2">
+                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Status</p>
+                    <span
+                        class="inline-flex items-center text-[10px] font-black uppercase tracking-widest {{ $data->status === 'good' ? 'text-emerald-500' : ($data->status === 'maintenance' ? 'text-amber-500' : 'text-rose-500') }}">
+                        <span
+                            class="w-2 h-2 rounded-full mr-2 animate-pulse {{ $data->status === 'good' ? 'bg-emerald-500' : ($data->status === 'maintenance' ? 'bg-amber-500' : 'bg-rose-500') }}"></span>
+                        {{ $data->status }}
+                    </span>
+                </div>
+                <div class="my-2">
+                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Date Purchase</p>
+                    <span class=" text-slate-400 dark:text-slate-500">{{ $data->date_purchase }}</span>
+                </div>
+                <div class="my-2">
+                    <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Room</p>
+                    <span class=" text-slate-400 dark:text-slate-500">{{ $data->room->room_name }}</span>
                 </div>
                 <div class="my-2">
                     <p class="font-bold text-slate-400 dark:text-slate-500 text-lg">Description</p>
-                    <span class=" text-slate-400 dark:text-slate-500">{{ $room->desc }}</span>
+                    <span class=" text-slate-400 dark:text-slate-500">{{ $data->desc }}</span>
                 </div>
-            </div>
-
-            <div
-                class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr
-                                class="text-slate-400 dark:text-slate-500 text-[10px] uppercase tracking-[0.2em] font-black bg-slate-50/50 dark:bg-slate-800/50">
-                                <th class="px-8 py-5">Room Name & Code</th>
-                                <th class="px-8 py-5">Desc</th>
-                                <th class="px-8 py-5 text-right">#</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
-                            @forelse ($items as $item)
-                                <tr class="group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
-                                    <td class="px-8 py-6">
-                                        <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">
-                                            {{ $item->item_name }}</div>
-                                        <div class="text-xs text-slate-400 dark:text-slate-500 mt-0.5 tracking-wider">
-                                            {{ $item->item_code }}</div>
-                                    </td>
-                                    <td class="px-8 py-6">
-                                        <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
-                                            {{ Str::limit($item->desc, 10) }}
-                                        </span>
-                                    </td>
-
-                                    <td class="px-8 py-6 text-right">
-                                        <a href=""
-                                            class="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mx-2">
-                                            <svg class="w-5 h-5" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"
-                                                fill="#f5f5f5">
-                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                    stroke-linejoin="round"></g>
-                                                <g id="SVGRepo_iconCarrier">
-                                                    <path d="M0 0h48v48H0z" fill="none"></path>
-                                                    <g id="Shopicon">
-                                                        <circle cx="24" cy="24" r="4"></circle>
-                                                        <path
-                                                            d="M24,38c12,0,20-14,20-14s-8-14-20-14S4,24,4,24S12,38,24,38z M24,16c4.418,0,8,3.582,8,8s-3.582,8-8,8s-8-3.582-8-8 S19.582,16,24,16z">
-                                                        </path>
-                                                    </g>
-                                                </g>
-                                            </svg>
-                                        </a>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr class="">
-                                    <td class="px-8 py-6 text-center" colspan="3">
-                                        <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg ">
-                                            Item not found
-                                        </span>
-                                    </td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                <div class="my-2">
+                    <img src="{{ asset('storage/images/items/'.$data->image) }}" width="100" class="img-fluid" alt="Image Item">
                 </div>
             </div>
         </div>
