@@ -2,11 +2,11 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-bold text-2xl text-slate-800 dark:text-slate-200 leading-tight">
-                {{ __('Daftar Ruangan') }}
+                {{ __('Rooms') }}
             </h2>
             <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-room')"
                 class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-200 dark:shadow-none transition-all duration-300 transform hover:scale-105">
-                + Tambah Ruangan
+                + Add New
             </button>
         </div>
     </x-slot>
@@ -67,10 +67,9 @@
             <div class="flex items-center justify-between mb-8">
                 <div>
                     <h2 class="text-xl font-black text-slate-800 dark:text-white">
-                        Tambah Ruangan Baru
+                        Add new room
                     </h2>
-                    <p class="text-sm text-slate-400 dark:text-slate-500 mt-1">Daftarkan lokasi penyimpanan aset baru
-                        Anda.</p>
+                    <p class="text-sm text-slate-400 dark:text-slate-500 mt-1">Create new room</p>
                 </div>
                 <div class="p-3 rounded-2xl bg-blue-50 dark:bg-blue-900/30 text-blue-500">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -85,28 +84,24 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <x-input-label for="name" value="Nama Ruangan" class="dark:text-slate-400" />
-                        <x-text-input id="name" name="name" type="text"
+                        <x-input-label for="name" value="Room Name" class="dark:text-slate-400" />
+                        <x-text-input id="name" name="room_name" type="text"
                             class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl"
-                            placeholder="Contoh: Ruang IT" />
+                            placeholder="ex: Server Room" />
                     </div>
 
                     <div>
-                        <x-input-label for="code" value="Kode Ruangan" class="dark:text-slate-400" />
-                        <x-text-input id="code" name="code" type="text"
+                        <x-input-label for="code" value="Room Code" class="dark:text-slate-400" />
+                        <x-text-input id="code" name="room_code" type="text"
                             class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl"
-                            placeholder="KODE-01" />
+                            placeholder="SRV-001" />
                     </div>
                 </div>
 
                 <div>
-                    <x-input-label for="category" value="Kategori" class="dark:text-slate-400" />
-                    <select id="category" name="category"
-                        class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">
-                        <option>Penyimpanan</option>
-                        <option>Fasilitas Umum</option>
-                        <option>Produksi</option>
-                    </select>
+                    <x-input-label for="category" value="Description" class="dark:text-slate-400" />
+                    <textarea name="desc" id="desc" class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm"></textarea>
+
                 </div>
 
                 <div class="mt-8 flex justify-end gap-3">
