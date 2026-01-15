@@ -41,10 +41,10 @@
                                     </td>
                                     <td class="px-8 py-6">
                                         <span
-                                            class="inline-flex items-center text-[10px] font-black uppercase tracking-widest {{ $room->status === 'Tersedia' ? 'text-emerald-500' : ($room->status === 'Terbatas' ? 'text-amber-500' : 'text-rose-500') }}">
+                                            class="inline-flex items-center text-[10px] font-black uppercase tracking-widest {{ $item->status === 'good' ? 'text-emerald-500' : ($item->status === 'maintenance' ? 'text-amber-500' : 'text-rose-500') }}">
                                             <span
                                                 class="w-2 h-2 rounded-full mr-2 animate-pulse {{ $item->status === 'good' ? 'bg-emerald-500' : ($item->status === 'maintenance' ? 'bg-amber-500' : 'bg-rose-500') }}"></span>
-                                            {{ $room->status }}
+                                            {{ $item->status }}
                                         </span>
                                     </td>
 
