@@ -7,6 +7,7 @@ use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class RoomController extends Controller
 {
@@ -40,6 +41,29 @@ class RoomController extends Controller
         $pic = User::where('is_admin', false)->get();
 
         return view('room.detail', compact('room', 'items', 'pic'));
+    }
+
+    public function update(Request $request, $param)
+    {
+        $data = Room::where('slug', $param)->firstOrFail();
+        $request->validate([
+            'room_name' => ['required', 'string', 'min:3', 'max:30'],
+            'room_code' => ['required', 'string', 'min:3', 'max:10', Rule::unique('rooms')->ignore($data->id)],
+            'desc' => ['required', 'max:50'],
+        ]);
+
+        $simpan = $request->all();
+        $simpan['slug'] = Str::slug($request->input('room_name')) . '-' . random_int(0, 1000000);
+
+        $data->update($simpan);
+        return redirect()->route('room.show', $data->slug)->with('success', 'Room Updated');
+    }
+
+    public function destroy($param)
+    {
+        $data = Room::where('slug', $param)->firstOrFail();
+        $data->delete();
+        return redirect()->route('room.index')->with('success', 'Room Deleted');
     }
 
 }

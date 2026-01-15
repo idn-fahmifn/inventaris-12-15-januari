@@ -4,10 +4,21 @@
             <h2 class="font-bold text-2xl text-slate-800 dark:text-slate-200 leading-tight">
                 {{ __('Detail Room') }}
             </h2>
-            <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-room')"
-                class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-200 dark:shadow-none transition-all duration-300 transform hover:scale-105">
-                Edit
-            </button>
+
+            <form action="{{ route('room.destroy', $room->slug) }}" method="post">
+                @csrf 
+                @method('delete')
+                <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-room')"
+                    class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-200 dark:shadow-none transition-all duration-300 transform hover:scale-105">
+                    Edit
+                </button>
+
+                <button type="submit" onclick="return confirm('Yakin mau dihapus?')"
+                    class="bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-200 dark:shadow-none transition-all duration-300 transform hover:scale-105">
+                    Delete
+                </button>
+
+            </form>
         </div>
     </x-slot>
 
@@ -99,22 +110,27 @@
                 </div>
             </div>
 
-            <form method="post" action="{{ route('room.store') }}" class="space-y-6">
+            <form method="post" action="{{ route('room.update', $room->slug) }}" class="space-y-6">
                 @csrf
+                @method('put')
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <x-input-label for="name" value="Room Name" class="dark:text-slate-400" />
-                        <x-text-input id="name" name="room_name" type="text" required value="{{ $room->room_name }}"
+                        <x-text-input id="name" name="room_name" type="text" required
+                            value="{{ $room->room_name }}"
                             class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl"
                             placeholder="ex: Server Room" />
                         <x-input-error :messages="$errors->get('room_name')" class="mt-2" />
                     </div>
 
                     <div>
-                        <x-input-label for="code" value="Room Code" class="dark:text-slate-400"  />
-                        <x-text-input id="code" name="room_code" type="text" required value="{{ $room->room_name }}"
+                        <x-input-label for="code" value="Room Code" class="dark:text-slate-400" />
+                        <x-text-input id="code" name="room_code" type="text" required
+                            value="{{ $room->room_code }}"
                             class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl"
                             placeholder="SRV-001" />
+                        <x-input-error :messages="$errors->get('room_code')" class="mt-2" />
+
                     </div>
                 </div>
 
@@ -128,6 +144,7 @@
                         @endforeach
 
                     </select>
+                    <x-input-error :messages="$errors->get('user_id')" class="mt-2" />
                 </div>
 
                 <div>
