@@ -2,11 +2,11 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-bold text-2xl text-slate-800 dark:text-slate-200 leading-tight">
-                {{ __('Rooms') }}
+                {{ __('Detail Room') }}
             </h2>
             <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-room')"
                 class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-200 dark:shadow-none transition-all duration-300 transform hover:scale-105">
-                + Add New
+                Edit
             </button>
         </div>
     </x-slot>
@@ -31,29 +31,50 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-50 dark:divide-slate-800">
-                            @foreach ($rooms as $room)
+                            @forelse ($items as $item)
                                 <tr class="group hover:bg-blue-50/30 dark:hover:bg-blue-900/10 transition-colors">
                                     <td class="px-8 py-6">
                                         <div class="font-bold text-slate-700 dark:text-slate-200 text-sm">
-                                            {{ $room->room_name }}</div>
+                                            {{ $item->item_name }}</div>
                                         <div class="text-xs text-slate-400 dark:text-slate-500 mt-0.5 tracking-wider">
-                                            {{ $room->room_code }}</div>
+                                            {{ $item->item_code }}</div>
                                     </td>
                                     <td class="px-8 py-6">
                                         <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
-                                            {{ Str::limit($room->desc, 10) }}
+                                            {{ Str::limit($item->desc, 10) }}
                                         </span>
                                     </td>
 
-
                                     <td class="px-8 py-6 text-right">
-                                        <a href="{{ route('room.show', $room->slug) }}"
+                                        <a href=""
                                             class="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mx-2">
-                                            <svg class="w-5 h-5" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" fill="#f5f5f5" ><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M0 0h48v48H0z" fill="none"></path> <g id="Shopicon"> <circle cx="24" cy="24" r="4"></circle> <path d="M24,38c12,0,20-14,20-14s-8-14-20-14S4,24,4,24S12,38,24,38z M24,16c4.418,0,8,3.582,8,8s-3.582,8-8,8s-8-3.582-8-8 S19.582,16,24,16z"></path> </g> </g></svg>
+                                            <svg class="w-5 h-5" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"
+                                                fill="#f5f5f5">
+                                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
+                                                    stroke-linejoin="round"></g>
+                                                <g id="SVGRepo_iconCarrier">
+                                                    <path d="M0 0h48v48H0z" fill="none"></path>
+                                                    <g id="Shopicon">
+                                                        <circle cx="24" cy="24" r="4"></circle>
+                                                        <path
+                                                            d="M24,38c12,0,20-14,20-14s-8-14-20-14S4,24,4,24S12,38,24,38z M24,16c4.418,0,8,3.582,8,8s-3.582,8-8,8s-8-3.582-8-8 S19.582,16,24,16z">
+                                                        </path>
+                                                    </g>
+                                                </g>
+                                            </svg>
                                         </a>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr class="">
+                                    <td class="px-8 py-6" colspan="3">
+                                        <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
+                                            Item not found
+                                        </span>
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

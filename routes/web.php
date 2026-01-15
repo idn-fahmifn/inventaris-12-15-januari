@@ -20,6 +20,7 @@ Route::prefix('admin')->middleware(['auth', 'verified', 'admin'])->group(functio
     // Route Ruangan
     Route::get('rooms', [RoomController::class, 'index'])->name('room.index');
     Route::post('rooms', [RoomController::class, 'store'])->name('room.store');
+    Route::get('rooms/{parameter}', [RoomController::class, 'show'])->name('room.show');
 
 });
 
