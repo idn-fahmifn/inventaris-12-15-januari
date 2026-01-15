@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ItemController extends Controller
 {
@@ -78,17 +79,22 @@ class ItemController extends Controller
 
         $request->validate([
             'item_name' => ['required', 'string', 'min:3', 'max:20'],
-            'category_id' => ['required', 'integer'],
-            'stok' => ['required', 'integer', 'min:0', 'max:1000'],
+            'item_code' => ['required', 'string', 'min:3', 'max:10', Rule::unique('items')->ignore($data->id)],
+            'room_id' => ['required', 'integer'],
+            'status' => ['required', 'in:good,maintenance,broke'],
+            'date_purchase' => ['required', 'date'],
             'image' => ['file', 'max:10240', 'mimes:png,jpg,jpeg,svg,webp'],
             'desc' => ['required'],
+
         ]);
 
         $simpan = [
             'item_name' => $request->input('item_name'),
+            'item_code' => $request->input('item_code'),
             'desc' => $request->input('desc'),
-            'category_id' => $request->input('category_id'),
-            'stok' => $request->input('stok'),
+            'room_id' => $request->input('room_id'),
+            'status' => $request->input('status'),
+            'date_purchase' => $request->input('date_purchase'),
             'slug' => Str::slug($request->input('item_name')) . random_int(0, 1000000),
         ];
 
@@ -114,11 +120,11 @@ class ItemController extends Controller
             $gambar->storeAs($path, $nama);
         }
         $data->update($simpan); //menyimmpan data baru data ke database
-        return redirect()->route('item.detail', $data->slug)
+        return redirect()->route('item.show', $data->slug)
             ->with('success', 'Item Created');
     }
 
-    public function delete($param)
+    public function destroy($param)
     {
         $data = Item::where('slug', $param)->firstOrFail();
 

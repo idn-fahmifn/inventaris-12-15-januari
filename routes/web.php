@@ -40,6 +40,12 @@ Route::prefix('petugas')->middleware(['auth', 'verified'])->group(function () {
 
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'petugas'])->name('dashboard.petugas');
+    Route::get('rooms', [RoomController::class, 'index'])->name('myroom.index');
+    Route::get('rooms/{parameter}', [RoomController::class, 'show'])->name('room.show');
+
+    Route::get('items/{parameter}', [ItemController::class, 'show'])->name('item.show');
+    Route::put('items/{parameter}', [ItemController::class, 'update'])->name('item.update');
+
 
 });
 

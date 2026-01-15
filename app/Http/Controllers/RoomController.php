@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -15,8 +16,9 @@ class RoomController extends Controller
     {
         $pic = User::where('is_admin', false)->get();
         $rooms = Room::all();
+        $my_room = Room::where('user_id', Auth::user()->id)->get();
 
-        return view('room.index', compact('rooms', 'pic'));
+        return view('room.index', compact('rooms', 'pic', 'my_room'));
     }
 
     public function store(Request $request)

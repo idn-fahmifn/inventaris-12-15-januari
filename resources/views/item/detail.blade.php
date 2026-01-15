@@ -90,14 +90,14 @@
                 </div>
             </div>
 
-            <form method="post" action="{{ route('item.update', $data->slug) }}" class="space-y-6">
+            <form method="post" action="{{ route('item.update', $data->slug) }}" class="space-y-6" enctype="multipart/form-data">
                 @csrf
                 @method('put')
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <x-input-label for="name" value="Item Name" class="dark:text-slate-400" />
-                        <x-text-input id="name" name="item_name" type="text" required :value="old('item_name')"
+                        <x-text-input id="name" name="item_name" type="text" required value="{{ $data->item_name }}"
                             class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl" />
                         <x-input-error :messages="$errors->get('item_name')" class="mt-2" />
 
@@ -105,7 +105,7 @@
 
                     <div>
                         <x-input-label for="code" value="Item Code" class="dark:text-slate-400" />
-                        <x-text-input id="code" name="item_code" type="text" required :value="old('item_code')"
+                        <x-text-input id="code" name="item_code" type="text" required value="{{ $data->item_code }}"
                             class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl" />
                         <x-input-error :messages="$errors->get('item_code')" class="mt-2" />
 
@@ -117,7 +117,7 @@
                         <x-input-label for="room" value="Room" class="dark:text-slate-400" />
                         <select id="room" name="room_id" required
                             class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">
-                            <option value="">Choose Room</option>
+                            <option value="{{ $data->room_id }}">{{ $data->room->room_name }}</option>
                             @foreach ($rooms as $item)
                                 <option value="{{ $item->id }}">{{ $item->room_name }}</option>
                             @endforeach
@@ -129,6 +129,7 @@
                         <x-input-label for="status" value="Status Condition" class="dark:text-slate-400" />
                         <select id="status" name="status" required
                             class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">
+                            <option value="{{ $data->status }}">{{ $data->status }}</option>
                             <option value="good">Good</option>
                             <option value="broke">Broke</option>
                             <option value="maintenance">Maintenance</option>
@@ -139,14 +140,14 @@
 
                 <div>
                     <x-input-label for="code" value="Date Purchase" class="dark:text-slate-400" />
-                    <x-text-input id="code" name="date_purchase" type="date" required :value="old('date')"
+                    <x-text-input id="code" name="date_purchase" type="date" required value="{{ $data->date_purchase }}"
                         class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl" />
                     <x-input-error :messages="$errors->get('date_purchase')" class="mt-2" />
                 </div>
 
                 <div>
                     <x-input-label for="code" value="Image Item" class="dark:text-slate-400" />
-                    <x-text-input id="code" name="image" type="file" required :value="old('image')"
+                    <x-text-input id="code" name="image" type="file"
                         class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl p-8" />
                     <x-input-error :messages="$errors->get('image')" class="mt-2" />
 
@@ -155,7 +156,7 @@
                 <div>
                     <x-input-label for="category" value="Description" class="dark:text-slate-400" required />
                     <textarea name="desc" id="desc"
-                        class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm"></textarea>
+                        class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">{{ $data->desc }}</textarea>
                     <x-input-error :messages="$errors->get('desc')" class="mt-2" />
 
                 </div>
