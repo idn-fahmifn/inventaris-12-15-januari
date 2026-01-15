@@ -14,6 +14,10 @@
     <div class="py-12 bg-[#F8FAFC] dark:bg-slate-950 min-h-screen transition-colors duration-500">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
+            @foreach ($errors->all() as $r)
+                {{ $r }}
+            @endforeach
+
             <div
                 class="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
                 <div class="overflow-x-auto">
@@ -36,13 +40,12 @@
                                             {{ $room->code }}</div>
                                     </td>
                                     <td class="px-8 py-6">
-                                        <span
-                                            class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
+                                        <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
                                             {{ Str::limit('Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure perspiciatis corporis ipsa laborum exercitationem est, omnis a reiciendis nihil ratione, enim odit harum, minus maxime quaerat eos soluta neque fugiat.', 10) }}
                                         </span>
                                     </td>
-                                   
-                                    
+
+
                                     <td class="px-8 py-6 text-right">
                                         <button
                                             class="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors mx-2">
@@ -79,19 +82,18 @@
                 </div>
             </div>
 
-            <form method="post" action="#" class="space-y-6">
+            <form method="post" action="{{ route('room.store') }}" class="space-y-6">
                 @csrf
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <x-input-label for="name" value="Room Name" class="dark:text-slate-400" />
-                        <x-text-input id="name" name="room_name" type="text"
+                        <x-text-input id="name" name="room_name" type="text" required
                             class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl"
                             placeholder="ex: Server Room" />
                     </div>
 
                     <div>
-                        <x-input-label for="code" value="Room Code" class="dark:text-slate-400" />
+                        <x-input-label for="code" value="Room Code" class="dark:text-slate-400" required />
                         <x-text-input id="code" name="room_code" type="text"
                             class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl"
                             placeholder="SRV-001" />
@@ -99,19 +101,31 @@
                 </div>
 
                 <div>
-                    <x-input-label for="category" value="Description" class="dark:text-slate-400" />
-                    <textarea name="desc" id="desc" class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm"></textarea>
+                    <x-input-label for="category" value="PIC Room" class="dark:text-slate-400" />
+                    <select id="category" name="user_id" required
+                        class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">
+                        <option value="">Choose PIC</option>
+                        @foreach ($pic as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
 
+                    </select>
+                </div>
+
+                <div>
+                    <x-input-label for="category" value="Description" class="dark:text-slate-400" required />
+                    <textarea name="desc" id="desc"
+                        class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm"></textarea>
                 </div>
 
                 <div class="mt-8 flex justify-end gap-3">
                     <button type="button" x-on:click="$dispatch('close')"
                         class="px-6 py-2.5 rounded-xl text-sm font-bold text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 transition">
-                        Batal
+                        Close
                     </button>
                     <button type="submit"
                         class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-2.5 rounded-xl text-sm font-bold shadow-lg shadow-blue-200 dark:shadow-none transition transform active:scale-95">
-                        Simpan Ruangan
+                        Save
                     </button>
                 </div>
             </form>
