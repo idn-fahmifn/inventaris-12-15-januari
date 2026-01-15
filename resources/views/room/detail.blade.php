@@ -68,8 +68,8 @@
                                 </tr>
                             @empty
                                 <tr class="">
-                                    <td class="px-8 py-6" colspan="3">
-                                        <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg">
+                                    <td class="px-8 py-6 text-center" colspan="3">
+                                        <span class="text-sm text-slate-600 dark:text-slate-400 px-3 py-1 rounded-lg ">
                                             Item not found
                                         </span>
                                     </td>
@@ -87,9 +87,9 @@
             <div class="flex items-center justify-between mb-8">
                 <div>
                     <h2 class="text-xl font-black text-slate-800 dark:text-white">
-                        Add new room
+                        Edit room
                     </h2>
-                    <p class="text-sm text-slate-400 dark:text-slate-500 mt-1">Create new room</p>
+                    <p class="text-sm text-slate-400 dark:text-slate-500 mt-1">Edit {{ $room->room_name }} </p>
                 </div>
                 <div class="p-3 rounded-2xl bg-blue-50 dark:bg-blue-900/30 text-blue-500">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -104,14 +104,15 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <x-input-label for="name" value="Room Name" class="dark:text-slate-400" />
-                        <x-text-input id="name" name="room_name" type="text" required
+                        <x-text-input id="name" name="room_name" type="text" required value="{{ $room->room_name }}"
                             class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl"
                             placeholder="ex: Server Room" />
+                        <x-input-error :messages="$errors->get('room_name')" class="mt-2" />
                     </div>
 
                     <div>
-                        <x-input-label for="code" value="Room Code" class="dark:text-slate-400" required />
-                        <x-text-input id="code" name="room_code" type="text"
+                        <x-input-label for="code" value="Room Code" class="dark:text-slate-400"  />
+                        <x-text-input id="code" name="room_code" type="text" required value="{{ $room->room_name }}"
                             class="mt-1 block w-full dark:bg-slate-800 dark:border-slate-700 rounded-xl"
                             placeholder="SRV-001" />
                     </div>
@@ -121,7 +122,7 @@
                     <x-input-label for="category" value="PIC Room" class="dark:text-slate-400" />
                     <select id="category" name="user_id" required
                         class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">
-                        <option value="">Choose PIC</option>
+                        <option value="{{ $room->user_id }}">{{ $room->user->name }}</option>
                         @foreach ($pic as $item)
                             <option value="{{ $item->id }}">{{ $item->name }}</option>
                         @endforeach
@@ -132,7 +133,7 @@
                 <div>
                     <x-input-label for="category" value="Description" class="dark:text-slate-400" required />
                     <textarea name="desc" id="desc"
-                        class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm"></textarea>
+                        class="mt-1 block w-full border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-xl shadow-sm">{{ $room->desc }}</textarea>
                 </div>
 
                 <div class="mt-8 flex justify-end gap-3">

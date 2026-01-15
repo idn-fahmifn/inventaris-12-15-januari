@@ -37,7 +37,9 @@ class RoomController extends Controller
     {
         $room = Room::where('slug', $param)->firstOrFail();
         $items = Item::where('room_id', $room->id)->get();
-        return view('room.detail', compact('room', 'items'));
+        $pic = User::where('is_admin', false)->get();
+
+        return view('room.detail', compact('room', 'items', 'pic'));
     }
 
 }
